@@ -5,13 +5,14 @@ class SortStack {
 		T min = holder.peek();
 		int minIndex = 0;
 
-		int numberHeld = holder.size();
+		int numberHeld = 0;
 		// this loop should find the value and index of smallest element on "holder" stack
-		for (int i = 0; i < numberHeld; i++) {
+		while (!holder.isEmpty()) {
 			if (holder.peek().compareTo(min) < 0) {
 				min = holder.peek();
-				minIndex = i;
+				minIndex = numberHeld;
 			}
+			numberHeld++;
 			stack.push(holder.pop());
 		}
 
