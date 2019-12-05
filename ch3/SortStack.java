@@ -1,35 +1,44 @@
 class SortStack {
 
-	private static <T extends Comparable> void placeMin(Stack<T> stack, Stack<T> holder) {
-		T min = stack.peek();
+	private static <T extends Comparable<T>> void placeMin(Stack<T> stack, Stack<T> holder) {
+		// this function finds the smallest element of "holder" stack and places it on "stack" stack
+		T min = holder.peek();
+		int minIndex = 0;
 
-		while (stack.size() > 0) {
-			// move all items to other stack, keeping track of min
-			
+		int numberHeld = holder.size();
+		// this loop should find the value and index of smallest element on "holder" stack
+		for (int i = 0; i < numberHeld; i++) {
+			if (holder.peek().compareTo(min) < 0) {
+				min = holder.peek();
+				minIndex = i;
+			}
+			stack.push(holder.pop());
 		}
 
-		// move all items back to stack, stopping at min, and move
-		// everything on stack to holder.
-
+		// move all items back to "holder." except skip min element, holding it
+		// and putting it on "stack"
+		for (int i = numberHeld - 1; i >= 0; i--) {
+			if (i != minIndex)
+				holder.push(stack.pop());
+			else
+				stack.pop();
+		}
 
 		// place min
-
-
-		// 
-
+		stack.push(min);
 	}
 
-	public static <T extends Comparable> void sortStack(Stack<T> stack) {
-		int numberPlaced = 0;
+	public static <T extends Comparable<T>> void sortStack(Stack<T> stack) {
+		// I'm assuming we can either transfer an element directly from
+		// stack to stack, or hold exactly one element aside.
+		// If we can only transfer directly, there's no way of reordering.
 
 		Stack<T> holder = new Stack<T>();
+		while (stack.size() > 0) holder.push(stack.pop());
 
-		while (numberPlaced < stack.size()) {
+		int n = holder.size();
+		for (int i = 0; i < n; i++)
 			placeMin(stack, holder);
-		}
-
 	}
-
-	
-
 }
+

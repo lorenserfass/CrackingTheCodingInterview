@@ -27,6 +27,15 @@ class Stack<T> {
 		return top.value;
 	}
 
+	public void print() {
+		// (prints from the top)
+		Node node = top;
+		while (node != null) {
+			System.out.println(node.value);
+			node = node.next;
+		}
+	}
+
 	public int size() { return size; }
 
 }
