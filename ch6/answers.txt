@@ -1,0 +1,78 @@
+Exercise 6.1
+
+
+
+Exercise 6.2
+
+
+
+Exercise 6.3
+1. Fill the 5-qt jug.
+2. Fill the 3-jug from the 5-jug.
+3. Pour out the 3 quarts.
+4. Pour the leftover 2 quarts into the 3-jug.
+5. Fill the 5-jug.
+6. Pour 1 qt fromo 5-jug into 3-jug (until it is full).
+7. There are four quarts in the 5-jug.
+
+
+Exercise 6.4
+(There are 1 or more blue-eyed people).
+Inductive reasoning:
+
+1. If there is 1 blue-eyed person, they immediately know they are blue-eyed
+because they can see everyone else. They leave on the first flight.
+(Nobody else leaves because they expect blue-eyed to leave on the first
+flight if he doesn't see any other blue-eyed people, but to wait if
+he does see some.)
+
+2. If there are 2 blue-eyed, each of them is waiting for the other to leave
+on the first flight. They don't, so each knows they're blue-eyed too.
+They leave on the second flight. (Whereas nobody else leaves on the second flight,
+because they are waiting to see whether the 2 blue-eyed people leave on the second flight).
+
+...
+
+If "k blue-eyed people would leave on kth flight" is true,
+then "(k+1) blue-eyed people would leave on (k+1)th flight" is true,
+because each of them is waiting for the other k people to leave on the kth flight.
+
+So N people would leave on Nth flight.
+
+
+
+Exercise 6.5
+
+
+
+
+Extra problem:
+
+There are 100 prisoners. On Tuesday the jailer says:
+Tomorrow I'll blindfold you all, put either a white or black hat on each of you,
+line you up facing one side, and take off the blindfolds. Nobody can see
+his own hat, only the people in front of him (not behind).
+You are each allowed to say only one word, "white" or "black."
+(You may yell it so everyone can hear). No tricky stuff with tone of voice. If that agrees
+with your hat color, you may go free. Otherwise you are executed. You
+may decide a strategy together beforehand but once the "exercise" begins you may
+say only the one word.
+
+What should the prisoners' strategy be, and how many prisoners can be saved?
+
+Answer:
+The 100th person (who can see the other 99) should go first.
+He should count the number of white hats among the 99. If it is even,
+he should say "white," if odd, then "black." The others will understand
+this code, arranged beforehand.
+(He may or may not be executed; there is no way to know his hat color
+and he is sacrificing himself to give information to the other prisoners.)
+The 99th person will be able to count whether the 98 hats in front of him
+have even or odd white hats. He can combine that with person 100's answer
+to work out his own hat color.
+Person 98 knows that 99 was correct, so he knows 98 hat colors and is in the same
+position as person 99, and can answer correctly.
+Similarly, all 99 people can answer their own hat color correctly one by one, from
+back to front.
+
+

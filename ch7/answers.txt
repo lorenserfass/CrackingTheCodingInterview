@@ -1,0 +1,100 @@
+
+Exercise 7.1
+
+If your probability of winning a basketball shot is p,
+for which values of p would you choose either of these two games:
+1) Win a shot.
+2) Win at least two out of three shots.
+
+Answer:
+If p < .5, pick game 1. If p > .5, pick game 2. (If p = .5, it doesn't matter).
+
+Explanation:
+If X is win and O is miss, then there are eight outcomes for game 2.
+Outcomes 1-4 are losing, outcomes 5-8 are winning.
+
+1. Prob(OOO) = (1 - p)^3
+2. Prob(XOO) = p * (1 - p)^2
+3. Prob(OXO) = p * (1 - p)^2
+4. Prob(OOX) = p * (1 - p)^2
+5. Prob(OXX) = p^2 * (1 - p)
+6. Prob(XOX) = p^2 * (1 - p)
+7. Prob(XXO) = p^2 * (1 - p)
+8. Prob(XXX) = p^3
+
+If you plot p on the x axis and Prob(outcomes 5-8) on the y axis,
+the curve is S-shaped.
+When p < .5, Prob(outcomes 1-4) is less than p.
+When p > .5, Prob(outcomes 5-8) is more than p.
+
+
+Exercise 7.2
+
+There is an ant on each vertex of an n-vertex polygon.
+They all start walking at the same speed at the same time along the sides of the polygon.
+What is the probability of a collision? (Each ant can choose to go either direction).
+
+Answer:
+1 - 2 / (2^n)
+
+Explanation:
+There are 2^n ways the ants could start walking.
+In only two of them the ants are all walking the same direction
+and won't collide.
+
+
+
+Exercise 7.3
+Given two lines in a Cartesian plane, write a function to tell
+whether they intersect.
+
+Answer:
+For generality the lines are expressed as
+A1x + B1y = C1
+A2x + B2y = C2
+
+Intuitively, if they have the same slope and aren't the same line, they won't intersect.
+Otherwise they intersect.
+
+To test same slope, evaluate: (A1*B2 == A2*B1)
+If they have the same slope, evaluate this to tell if they are the same line:
+(B1*C2 == B2*C1) && (A1*C2 == A2*C1).
+
+
+Exercise 7.4
+?????
+
+
+
+Exercise 7.5
+Give two squares in the 2d plane, find a line that cuts both squares in half.
+
+
+Answer:
+Average the x and y coordinates of each square to find the two square centers.
+The line will go through the two square centers.
+...
+
+
+
+Exercise 7.6
+?????
+
+
+7.7
+See code.
+Procedure:
+Start with 3, 5, 7.
+Then, keep the numbers so far in a set.
+To get the next number, compute three things and find the smallest of the three.
+A) The next number, if it is formed by multiplying an existing member by 3.
+B) The next number, if it is formed by multiplying an existing member by 5.
+C) The next number, if it is formed by multiplying an existing member by 7.
+
+For example, to compute (A):
+Divide the highest number so far (7) by 3. It is 2.333. Find the next largest number
+within the set (which is 3) and multiply it by 3, to make 9.
+
+To easily find the next largest number in the set, you can store the numbers in a binary tree.
+Computing the nth number should be proportional to log(n).
+
