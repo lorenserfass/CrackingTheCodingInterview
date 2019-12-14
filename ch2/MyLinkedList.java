@@ -1,6 +1,16 @@
 public class MyLinkedList<T> {
+	
+	class Node {
+		Node next;
+		T value;
 
-	public Node<T> head = null;
+		Node(T value) {
+			next = null;
+			this.value = value;
+		}
+	}
+
+	public Node head = null;
 
 
 	public void addHead(T value) {
@@ -11,7 +21,7 @@ public class MyLinkedList<T> {
 
 	// this method is so we can "rewire" the list, reordering without creating new nodes
 	// (for some of the exercises)
-	public void addHead(Node<T> newHead) {
+	public void addHead(Node newHead) {
 		newHead.next = head;
 		head = newHead;
 	}
@@ -26,14 +36,22 @@ public class MyLinkedList<T> {
 		while (node.next != null) node = node.next;
 		node.next = new Node(value);
 	}
-
-	public void print() {
-		int i = 0;
-		Node<T> n = head;
+	
+	public String toString() {
+		Node n = head;
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
 		while (n != null) {
-			System.out.println("Node " + (i++) + ": " + n.value);
+			sb.append(n.value);
+			if (n.next != null) sb.append(", ");
 			n = n.next;
 		}
+		sb.append("]");
+		return sb.toString();
+	}
+
+	public void print() {
+		System.out.println(toString());
 	}
 
 }

@@ -1,4 +1,32 @@
+import java.util.HashSet;
+
 public class LinkedListExercises {
+	
+	
+	public static <T> void ex2_1_remove_duplicates(MyLinkedList<T> list) {
+		HashSet<T> valuesSet = new HashSet<T>();
+		
+		MyLinkedList<T>.Node node1 = list.head;
+		
+		if (node1 == null) return; // empty list
+		MyLinkedList<T>.Node node2;
+		
+		valuesSet.add(list.head.value);
+		
+		while (node1 != null) {
+			node2 = node1.next;
+			if (node2 == null)
+				break;
+			
+			while (node2 != null && valuesSet.contains(node2.value))
+				node2 = node2.next;
+			
+			if (node2 != null) valuesSet.add(node2.value);
+			node1.next = node2;
+			node1 = node1.next;
+		}
+
+	}
 
 
 	public static <T> T ex2_2_kth_from_last(MyLinkedList<T> list, int k) {
@@ -8,7 +36,7 @@ public class LinkedListExercises {
 		int len = 0; // list size could be stored in the list class; for a question like this they probably don't want you to use that
 
 		// find the size of the length in one pass
-		Node<T> node = list.head;
+		MyLinkedList<T>.Node node = list.head;
 		while (node != null) {
 			len++;
 			node = node.next;
@@ -30,7 +58,7 @@ public class LinkedListExercises {
 
 
 	// TODO: this not tested yet
-	public static <T> void ex2_3_delete_node(MyLinkedList<T> list, Node<T> toDelete) throws Exception {
+	public static <T> void ex2_3_delete_node(MyLinkedList<T> list, MyLinkedList<T>.Node toDelete) throws Exception {
 		if (toDelete == null)
 			throw new java.lang.Exception("trying to delete nothing");
 
@@ -41,7 +69,7 @@ public class LinkedListExercises {
 		}
 
 		else {
-			Node<T> node = list.head;
+			MyLinkedList<T>.Node node = list.head;
 			// advance until it is right before toDelete:
 			while (node.next != toDelete)
 				node = node.next;
@@ -58,9 +86,9 @@ public class LinkedListExercises {
 		MyLinkedList<T> less = new MyLinkedList<T>();
 		MyLinkedList<T> greater_or_equal = new MyLinkedList<T>();
 
-		Node<T> l = ll.head;
+		MyLinkedList<T>.Node l = ll.head;
 		while (l.next != null) {
-			Node n = l.next;
+			MyLinkedList<T>.Node n = l.next;
 			l.next = null;
 			if (val.compareTo(l.value) <= 0)
 				greater_or_equal.addHead(l);
@@ -79,7 +107,7 @@ public class LinkedListExercises {
 
 	// TODO: check this for bugs and use it to test more scenarios
 	public static <T extends Comparable<T>> boolean isPartitioned(MyLinkedList<T> list, T val) {
-		Node<T> node = list.head;
+		MyLinkedList<T>.Node node = list.head;
 		if (node == null) return true;
 
 		while (node.next != null) {
@@ -103,8 +131,8 @@ public class LinkedListExercises {
 							MyLinkedList<Integer> list2) {
 		MyLinkedList<Integer> list3 = new MyLinkedList<Integer>();
 
-		Node<Integer> n1 = list1.head;
-		Node<Integer> n2 = list2.head;
+		MyLinkedList<Integer>.Node n1 = list1.head;
+		MyLinkedList<Integer>.Node n2 = list2.head;
 
 		int carryover = 0;
 
@@ -133,7 +161,7 @@ public class LinkedListExercises {
 	public static <T> MyLinkedList<T> reverse(MyLinkedList<T> list1) {
 		MyLinkedList<T> list2 = new MyLinkedList<T>();
 
-		Node<T> node = list1.head;
+		MyLinkedList<T>.Node node = list1.head;
 
 		while (node != null) {
 			list2.addHead(node.value);
@@ -154,8 +182,8 @@ public class LinkedListExercises {
 	public static <T> boolean ex2_7_isPalindrome(MyLinkedList<T> list1) {
 		MyLinkedList<T> list2 = reverse(list1);
 
-		Node<T> node1 = list1.head;
-		Node<T> node2 = list2.head;
+		MyLinkedList<T>.Node node1 = list1.head;
+		MyLinkedList<T>.Node node2 = list2.head;
 
 		while (node1 != null && node2 != null) {
 			if (node1.value != node2.value)
@@ -185,7 +213,7 @@ public class LinkedListExercises {
 
 		// exercise 2.3
 		System.out.println("\n\nTesting ex2_3");
-		Node<Integer> n = list.head;
+		MyLinkedList<Integer>.Node n = list.head;
 		while (n.next != null) n = n.next;
 		System.out.println("Deleting last node:");
 		ex2_3_delete_node(list, n);

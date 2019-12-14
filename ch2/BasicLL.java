@@ -1,6 +1,6 @@
 public class BasicLL<T> {
 
-	public BasicLL next;
+	public BasicLL<T> next;
 	public T value;
 
 
@@ -47,7 +47,7 @@ public class BasicLL<T> {
 	}*/
 
 	public void print() {
-		BasicLL vbll = this;
+		BasicLL<T> vbll = this;
 		while (vbll != null) {
 			System.out.println(vbll.value);
 			vbll = vbll.next;
