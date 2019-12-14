@@ -75,19 +75,19 @@ public class LinkedListExercises {
 				node = node.next;
 
 			node.next = toDelete.next;
-			toDelete.next = null;
+			toDelete.next = null; // Not sure if this is necessary or helpful
 		}
 		return;
 	}
 
 
 	public static <T extends Comparable<T>>
-	void ex2_4_partition_around_value(MyLinkedList<T> ll, T val) {
+	void ex2_4_partitionAroundValue(MyLinkedList<T> ll, T val) {
 		MyLinkedList<T> less = new MyLinkedList<T>();
 		MyLinkedList<T> greater_or_equal = new MyLinkedList<T>();
 
 		MyLinkedList<T>.Node l = ll.head;
-		while (l.next != null) {
+		while (l != null) {
 			MyLinkedList<T>.Node n = l.next;
 			l.next = null;
 			if (val.compareTo(l.value) <= 0)
@@ -98,6 +98,11 @@ public class LinkedListExercises {
 		}
 
 		l = less.head;
+		if (l == null) {
+			ll.head = greater_or_equal.head;
+			return;
+		}
+		
 		while (l.next != null) l = l.next;
 
 		l.next = greater_or_equal.head;
@@ -105,27 +110,6 @@ public class LinkedListExercises {
 		ll.head = less.head;
 	}
 
-	// TODO: check this for bugs and use it to test more scenarios
-	public static <T extends Comparable<T>> boolean isPartitioned(MyLinkedList<T> list, T val) {
-		MyLinkedList<T>.Node node = list.head;
-		if (node == null) return true;
-
-		while (node.next != null) {
-			if (node.value.compareTo(val) >= 0)
-				break;
-			node = node.next;
-		}
-
-		node = node.next;
-
-		while (node.next != null) {
-			if (node.value.compareTo(val) < 0)
-				return false;
-			node = node.next;
-		}
-			
-		return true;
-	}
 
 	public static MyLinkedList<Integer> ex2_5_part1(MyLinkedList<Integer> list1,
 							MyLinkedList<Integer> list2) {
@@ -176,7 +160,46 @@ public class LinkedListExercises {
 	}
 
 
-	// TODO: Ex 2.6
+	// TODO: is it cheating to use a HashSet?
+	public static <T> MyLinkedList<T>.Node ex2_6_findLoop(MyLinkedList<T> ll) {
+		// returns null if no loop.
+		// if there is a loop, returns the node at the beginning of the loop.
+		HashSet<MyLinkedList<T>.Node> nodeset = new HashSet<MyLinkedList<T>.Node>();
+		MyLinkedList<T>.Node node = ll.head;
+		
+		while (node != null) {
+			if (nodeset.contains(node))
+				return node;
+			
+			nodeset.add(node);
+			node = node.next;
+		}
+		return null;
+	}
+	
+	
+	public static <T> MyLinkedList<T>.Node ex2_6_findLoopQuadratic(MyLinkedList<T> ll) {
+		MyLinkedList<T>.Node node = ll.head;
+		
+		// outer loop: go through the nodes, keep track of the index
+		// inner loop: check all preceding nodes (starting from head) to see
+		// if equal to current node
+		int i = 0;
+		while (node != null) {
+			MyLinkedList<T>.Node test = ll.head;
+			int j = 0;
+			while (j < i) {
+				if (test == node)
+					return node;
+				test = test.next;
+				j++;
+			}
+			
+			node = node.next;
+			i++;
+		}
+		return null;
+	}
 
 
 	public static <T> boolean ex2_7_isPalindrome(MyLinkedList<T> list1) {
@@ -198,20 +221,11 @@ public class LinkedListExercises {
 	public static void main(String[] args) throws Exception {
 
 
-		// exercise 2.2
-		System.out.println("Testing ex2_2");
+		// exercise 2.3
 		MyLinkedList<Integer> list = new MyLinkedList<Integer>();
 		for (int i = 0; i < 10; i++) {
 			list.addTail(i);
 		}
-		System.out.println("the list:");
-		list.print();
-		System.out.println("element 1 from the end (the last):" + ex2_2_kth_from_last(list, 1));
-		System.out.println("element 4 from end:" + ex2_2_kth_from_last(list, 4));
-		System.out.println("10 from the end:" + ex2_2_kth_from_last(list, 10));
-
-
-		// exercise 2.3
 		System.out.println("\n\nTesting ex2_3");
 		MyLinkedList<Integer>.Node n = list.head;
 		while (n.next != null) n = n.next;
@@ -231,25 +245,6 @@ public class LinkedListExercises {
 		list.print();
 		
 
-		// ex 2.4
-		System.out.println("\n\nTesting ex2_4. List before partition:");
-		MyLinkedList<Integer> ll = new MyLinkedList<Integer>();
-		ll.addHead(8);
-		ll.addHead(5);
-		ll.addHead(9);
-		ll.addHead(1);
-		ll.addHead(2);
-		ll.addHead(6);
-		ll.addHead(10);
-		ll.addHead(4);
-		ll.addHead(7);
-		ll.addHead(3);
-		ll.print();
-
-		ex2_4_partition_around_value(ll, 5);
-		System.out.println("Testing ex2_4. List after partitioning on 5:");
-		ll.print();
-		System.out.println(isPartitioned(ll, 5));
 
 		
 		// ex 2.5

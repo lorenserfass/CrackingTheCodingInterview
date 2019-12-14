@@ -102,12 +102,87 @@ class LinkedListTests {
 		
 	}
 
+	private static <T extends Comparable<T>> boolean isPartitioned(MyLinkedList<T> ll, T value) {
+		// tests whether all nodes less than "value" come before
+		// all nodes greater or equal to "value"
+		if (ll.head == null) return true; // empty list
+
+		MyLinkedList<T>.Node node = ll.head;
+		
+		while (node.next != null) {
+			// test if left node belongs in second part, and right node belongs in first part
+			if (node.value.compareTo(value) >= 0 && node.next.value.compareTo(value) < 0)
+				return false;
+			node = node.next;
+		}
+		return true;
+	}
+	
+	public static void ex2_4_partition_TEST() {
+		MyLinkedList<Integer> ll = new MyLinkedList<Integer>();
+		LinkedListExercises.ex2_4_partitionAroundValue(ll, 5);
+		assert isPartitioned(ll, 7);
+		
+		
+		
+		Random r = new Random();
+		
+		for (int i = 0; i < 100; i++) {
+			MyLinkedList<Integer> llBefore = new MyLinkedList<Integer>();
+			MyLinkedList<Integer> llAfter = new MyLinkedList<Integer>();
+			
+			for (int j = 0; j < 10; j++) {
+				int randint = r.nextInt(15);
+				llBefore.addHead(randint);
+				llAfter.addHead(randint);
+			}
+			int x = r.nextInt(15);
+			LinkedListExercises.ex2_4_partitionAroundValue(llAfter, x);
+			assert isPartitioned(llAfter, x) : "list not partitioned by " + x + ". Before: " + llBefore + ". After: " + llAfter;
+			
+			// TODO: test that they contain the same elements with the same counts
+		}
+	}
+	
+	public static void ex2_6_findLoop_TEST() {
+		// test an empty list
+		MyLinkedList<Integer> emptyList = new MyLinkedList<Integer>();
+		assert LinkedListExercises.ex2_6_findLoop(emptyList) == null;
+		assert LinkedListExercises.ex2_6_findLoopQuadratic(emptyList) == null;
+		
+		// test a list without a loop
+		MyLinkedList<Integer> llWithoutLoop = new MyLinkedList<Integer>();
+		llWithoutLoop.addHead(1);
+		llWithoutLoop.addHead(2);
+		llWithoutLoop.addHead(3);
+		assert LinkedListExercises.ex2_6_findLoop(llWithoutLoop) == null;
+		assert LinkedListExercises.ex2_6_findLoopQuadratic(llWithoutLoop) == null;
+
+		// test a list with a loop
+		MyLinkedList<String> llWithLoop = new MyLinkedList<String>();
+		MyLinkedList<String>.Node a = llWithLoop.new Node("A");
+		MyLinkedList<String>.Node b = llWithLoop.new Node("B");
+		MyLinkedList<String>.Node c = llWithLoop.new Node("C");
+		MyLinkedList<String>.Node d = llWithLoop.new Node("D");
+		MyLinkedList<String>.Node e = llWithLoop.new Node("E");
+		a.next = b;
+		b.next = c;
+		c.next = d;
+		d.next = e;
+		e.next = c;
+		llWithLoop.head = a;
+		assert LinkedListExercises.ex2_6_findLoop(llWithLoop) == c;
+		assert LinkedListExercises.ex2_6_findLoopQuadratic(llWithLoop) == c;
+	}
+
 	public static void main(String[] args) {
 		
 		ex2_1_removeDuplicates_TEST();
 		
 		ex2_2_kthFromLast_TEST();
 
-
+		ex2_4_partition_TEST();
+		
+		ex2_6_findLoop_TEST();
 	}
 }
