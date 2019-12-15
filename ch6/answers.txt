@@ -1,5 +1,9 @@
 Exercise 6.1
-
+Weigh simultaneously:
+0 pills taken from the 1st bottle,
+1 pill  taken from the 2nd bottle,
+...
+19 pills taken from the 20th bottle.
 
 
 Exercise 6.2
