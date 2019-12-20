@@ -1,10 +1,10 @@
 class Hanoi {
 
-	Stack<Integer> a;
-	Stack<Integer> b;
-	Stack<Integer> c;
+	MyStack<Integer> a;
+	MyStack<Integer> b;
+	MyStack<Integer> c;
 
-	private void moveDisks(int n, Stack start, Stack middle, Stack end) {
+	private void moveDisks(int n, MyStack<Integer> start, MyStack<Integer> middle, MyStack<Integer> end) {
 		if (n == 0) return;
 		moveDisks(n - 1, start, end, middle);
 		end.push(start.pop());
@@ -15,9 +15,9 @@ class Hanoi {
 	public Hanoi(int n) {
 		if (n > 10) return;
 
-		a = new Stack<Integer>();
-		b = new Stack<Integer>();
-		c = new Stack<Integer>();
+		a = new MyStack<Integer>();
+		b = new MyStack<Integer>();
+		c = new MyStack<Integer>();
 
 		for (int i = n; i >= 1; i--) a.push(i);
 		moveDisks(n, a, b, c);

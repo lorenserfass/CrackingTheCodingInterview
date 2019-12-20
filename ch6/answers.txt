@@ -7,7 +7,17 @@ Weigh simultaneously:
 
 
 Exercise 6.2
-
+I believe this is impossible.
+Imagine coloring the dominos, a black and white square on each domino.
+No matter what arrangement of dominos is chosen, the white and black
+squares on the dominos can be placed on top of the white and black
+squares on the chessboard. That's because if a domino's colors don't
+agree with the chessboard, it can always be rotated 180 degrees, and it's
+now in the same place but the colors fit with the chessboard.
+Now the reason the puzzle is impossible, is that the modified chessboard
+has an unequal number of white and black squares on it, because the
+two removed corner squares are of the same color. The 31 dominos
+have 31 white squares and 31 black squares.
 
 
 Exercise 6.3

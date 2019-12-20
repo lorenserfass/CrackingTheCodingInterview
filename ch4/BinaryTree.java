@@ -1,12 +1,18 @@
 class BinaryTree<T> {
 
-	BinaryNode root = null;
+	Node root = null;
 
-	class BinaryNode<T> {
+	class Node {
 		T value;
-		BinaryNode parent; // used in ex 4.6
-		BinaryNode left;
-		BinaryNode right;
+		Node parent; // used in ex 4.6, also ancestor exercise
+		Node left;
+		Node right;
+		
+		Node(T v) {
+			value = v;
+			left = null;
+			right = null;
+		}
 	}
 
 	

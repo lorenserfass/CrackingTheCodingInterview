@@ -1,11 +1,11 @@
 class QueueFromTwoStacks<T> {
 
-	private Stack<T> head;
-	private Stack<T> tail;
+	private MyStack<T> head;
+	private MyStack<T> tail;
 
 	public QueueFromTwoStacks() {
-		head = new Stack<T>();
-		tail = new Stack<T>();
+		head = new MyStack<T>();
+		tail = new MyStack<T>();
 	}
 
 	public void pushTail(T value) {

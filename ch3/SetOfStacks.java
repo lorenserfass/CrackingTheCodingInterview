@@ -1,22 +1,22 @@
 class SetOfStacks<T> {
 
 	private int capacity;
-	private Stack<Stack<T>> stacks;
+	private MyStack<MyStack<T>> stacks;
 	private int size = 0;;
 
 	public SetOfStacks() {
 		capacity = 10;
-		stacks = new Stack<Stack<T>>();
+		stacks = new MyStack<MyStack<T>>();
 	}
 
 	public SetOfStacks(int capacity) {
 		this.capacity = capacity;
-		stacks = new Stack<Stack<T>>();
+		stacks = new MyStack<MyStack<T>>();
 	}
 
 	public void push(T value) {
 		if (stacks.size() == 0 || stacks.peek().size() == capacity)
-			stacks.push(new Stack<T>());
+			stacks.push(new MyStack<T>());
 
 		size++;
 		stacks.peek().push(value);

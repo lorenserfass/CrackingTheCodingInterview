@@ -1,5 +1,4 @@
-class MyStack<T> {
-
+class Stack<T> {
 	Node top = null;
 	private int size = 0;
 	
@@ -7,20 +6,21 @@ class MyStack<T> {
 		Node next;
 		T value;
 		
-		Node(T v, Node n) {
-			value = v;
-			next = n;
+		Node(T value) {
+			next = null;
+			this.value = value;
 		}
 	}
 
 	public void push(T val) {
 		size++;
-		Node newTop = new Node(val, top);
-		top = newTop;
+		Node t = new Node(val);
+		t.next = top;
+		top = t;
 	}
 
 	public T pop() {
-		if (size == 0)
+		if (top == null)
 			throw new java.util.NoSuchElementException();
 
 		T t = top.value;
@@ -28,8 +28,6 @@ class MyStack<T> {
 		size--;
 		return t;
 	}
-
-	public boolean isEmpty() { return size == 0; }
 
 
 	public T peek() {
@@ -50,5 +48,6 @@ class MyStack<T> {
 
 	public int size() { return size; }
 
+	public boolean isEmpty() { return size == 0; }
 
 }

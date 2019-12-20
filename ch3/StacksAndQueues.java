@@ -13,7 +13,7 @@ class StacksAndQueues {
 
 		// ex 3.5
 		System.out.println("Testing 3.5");
-		Stack<Integer> s = new Stack<Integer>();
+		MyStack<Integer> s = new MyStack<Integer>();
 		s.push(2);
 		s.push(5);
 		s.push(4);
