@@ -1,4 +1,4 @@
-class Stack<T> {
+class MyStack<T> {
 	Node top = null;
 	private int size = 0;
 	
