@@ -4,22 +4,21 @@ class Ex9_6_parentheses {
 		addParen("", 0, 0, n);
 	}
 
-	private static void addParen(String s, int open, int close, int n) {
-		if (close == n) {
+	private static void addParen(String s, int opened, int closed, int n) {
+		if (closed == n) {
 			System.out.println(s);
 			return;
 		}
 
-		if (open < n)
-			addParen(s + "(", open + 1, close, n);
+		if (opened < n)
+			addParen(s + "(", opened + 1, closed, n);
 
-		if (close < open)
-			addParen(s + ")", open, close + 1, n);
+		if (closed < opened)
+			addParen(s + ")", opened, closed + 1, n);
 	}
 
 	public static void main(String[] args) {
-		printAllParenStrings(3);
-
+		printAllParenStrings(4);
 	}
 
 }

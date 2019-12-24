@@ -21,19 +21,32 @@ class BinaryTree<T extends Comparable<T>> {
 			this.value = value;
 			this.left = null;
 			this.right = null;
+			this.parent = null;
 		}
 		
 		Node(T value, Node left, Node right) {
 			this.value = value;
 			this.left = left;
 			this.right = right;
+			this.parent = null;
 		}
+
 	}
 	
 	public BinaryTree() {
 		root = null;
 	}
 	
+	public void fillParents() {
+		fillParents(root, null);
+	}
+	
+	private void fillParents(Node node, Node parent) {
+		if (node == null) return;
+		node.parent = parent;
+		fillParents(node.left, node);
+		fillParents(node.right, node);
+	}
 	
 
 
@@ -119,7 +132,7 @@ class BinaryTree<T extends Comparable<T>> {
 	 * Uses the parent links.
 	 * @param node1
 	 * @param node2
-	 * @return
+	 * @return The first common ancestor of the two nodes.
 	 */
 	public Node Ex4_7_1_ancestor(Node node1, Node node2) {
 		while (node1 != null) {
@@ -141,10 +154,9 @@ class BinaryTree<T extends Comparable<T>> {
 	 * Uses extra space and parent link.
 	 * @param node1
 	 * @param node2
-	 * @return
+	 * @return The first common ancestor of the two nodes.
 	 */
 	public Node Ex4_7_2_ancestor(Node node1, Node node2) {
-		// linear time in tree height
 		MyStack<Node> stack1 = new MyStack<Node>();
 		MyStack<Node> stack2 = new MyStack<Node>();
 		
@@ -158,12 +170,63 @@ class BinaryTree<T extends Comparable<T>> {
 		}
 		
 		Node ancestor = null;
-		while (stack1.peek() == stack2.peek()) {
+		while (!stack1.isEmpty() && !stack2.isEmpty() && stack1.peek() == stack2.peek()) {
 			ancestor = stack1.pop();
 			stack2.pop();
 		}
 		return ancestor;
 	}
+	
+	
+	
+	/**
+	 * Does not use the parent links. Uses a recursive algorithm invoked on the root.
+	 * @param node1
+	 * @param node2
+	 * @return The first common ancestor of the two nodes.
+	 */
+	public Node Ex4_7_3_ancestor(Node node1, Node node2) {
+		return getAncestorInfo(root, node1, node2).ancestor; // TODO
+	}
+	
+	
+	private AncestorInfo getAncestorInfo(Node node, Node node1, Node node2) { // , boolean is1above, boolean is2above) {
+		
+		if (node == null)
+			return new AncestorInfo(null, false, false);
+		
+		AncestorInfo  left = getAncestorInfo(node.left,  node1, node2); // , is1above, is2above);
+		AncestorInfo right = getAncestorInfo(node.right, node1, node2); // , is1above, is2above);
+		
+		boolean is1below = node == node1 || left.is1below || right.is1below;
+		boolean is2below = node == node2 || left.is2below || right.is2below;
+		Node ancestor = null;
+
+		if (left.ancestor != null)
+			ancestor = left.ancestor;
+		if (right.ancestor != null)
+			ancestor = right.ancestor;
+
+		if (is1below && is2below && left.ancestor == null && right.ancestor == null)
+			return new AncestorInfo(node, true, true);
+		else
+			return new AncestorInfo(ancestor, is1below, is2below);
+	}
+	
+	
+	private class AncestorInfo {
+		Node ancestor;
+		boolean is1below;
+		boolean is2below;
+		
+		AncestorInfo(Node anc, boolean b1, boolean b2) {
+			ancestor = anc;
+			is1below = b1;
+			is2below = b2;
+		}
+	}
+	
+	
 
 	
 	/**
@@ -247,6 +310,7 @@ class BinaryTree<T extends Comparable<T>> {
 	private boolean isRightChild(Node node) {
 		return node.parent != null && node.parent.right == node;
 	}
+
 
 	private boolean isLeftChild(Node node) {
 		return node.parent != null && node.parent.left == node;
