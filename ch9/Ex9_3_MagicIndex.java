@@ -2,6 +2,12 @@
 public class Ex9_3_MagicIndex {
 
 
+	/**
+	 * Search the whole array in sequence.
+	 * Use this if values are not distinct.
+	 * @param arr
+	 * @return
+	 */
 	public static int magicIndexLinear(int[] arr) {
 		for (int i = 0; i < arr.length; i++) {
 			if (arr[i] == i) return i;
@@ -26,6 +32,11 @@ public class Ex9_3_MagicIndex {
 		else return middle; // middle == arr[middle]
 	}
 
+	/**
+	 * Like binary search, but with different comparisons.
+	 * @param arr
+	 * @return
+	 */
 	public static int magicIndexLogN(int[] arr) {
 		return magicIndexRecursive(arr, 0, arr.length - 1);
 	}

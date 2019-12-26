@@ -83,10 +83,43 @@ class BinaryTree<T extends Comparable<T>> {
 	/**
 	 * @return An ArrayList of linked lists of nodes at each depth
 	 */
-	public ArrayList<MyLinkedList<BinaryTree<T>.Node>> Ex4_4_listOfListsOfNodes() {
+	public ArrayList<MyLinkedList<Node>> Ex4_4_listOfListsOfNodes() {
 		ArrayList<MyLinkedList<Node>> lol = new ArrayList<MyLinkedList<Node>>();
 		addToLOL(lol, root, 0);
 		return lol;
+	}
+	
+	/**
+	 * TODO: test this
+	 * @return
+	 */
+	public ArrayList<MyLinkedList<Node>> Ex4_4_listOfListsWithBFS() {
+		ArrayList<MyLinkedList<Node>> lol = new ArrayList<MyLinkedList<Node>>();
+		MyQueue<BFSInfo> q = new MyQueue<BFSInfo>();
+		q.enqueue(new BFSInfo(root, 0));
+		while (!q.isEmpty()) {
+			BFSInfo b = q.dequeue();
+			if (lol.size() <= b.depth)
+				lol.add(new MyLinkedList<Node>());
+			lol.get(b.depth).addHead(b.node);
+			
+			if (b.node.left != null)
+				q.enqueue(new BFSInfo(b.node.left, b.depth + 1));
+			if (b.node.right != null)
+				q.enqueue(new BFSInfo(b.node.right, b.depth + 1));
+		}
+		
+		
+		return lol;
+	}
+	
+	class BFSInfo {
+		Node node;
+		int depth;
+		BFSInfo(Node node, int depth) {
+			this.node = node;
+			this.depth = depth;
+		}
 	}
 
 
@@ -226,6 +259,27 @@ class BinaryTree<T extends Comparable<T>> {
 		}
 	}
 	
+	
+	public void bfsForTrees() {
+		MyQueue<Node> q = new MyQueue<Node>();
+		q.enqueue(root);
+		while (!q.isEmpty()) {
+			Node n = q.dequeue();
+			System.out.println(n.value);
+			if (n.left  != null) q.enqueue(n.left);
+			if (n.right != null) q.enqueue(n.right);
+		}
+	}
+	
+	
+	
+	public Node Ex4_8_findSubtree(BinaryTree<T> other) {
+		// TODO
+		
+		
+		
+		return null; // TODO
+	}
 	
 
 	

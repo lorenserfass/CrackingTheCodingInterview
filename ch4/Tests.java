@@ -5,6 +5,7 @@ class Tests {
 	public static void main(String[] args) {
 		BinaryTree<Integer> tree = new BinaryTree<Integer>();
 
+		// a list of integer tree-nodes
 		ArrayList<BinaryTree<Integer>.Node> nodeList = new ArrayList<BinaryTree<Integer>.Node>();
 		for (int i = 0; i < 13; i++)
 			nodeList.add(null);
@@ -42,6 +43,8 @@ class Tests {
 		tree.fillParents();
 		
 		
+		// manually calculated values
+		// ancestors[i][j] is the first common ancestor of node i and node j
 		int[][] ancestors =
 			{{0, 1, 1, 1, 1, 5, 5, 5, 5, 5, 5, 5, 5},
 			{1, 1, 1, 1, 1, 5, 5, 5, 5, 5, 5, 5, 5},
@@ -70,6 +73,9 @@ class Tests {
 			}
 		}
 		System.out.println("OK");
+		
+		System.out.println("here's bfs:");
+		tree.bfsForTrees();
 
 		// Node[][] ancestors = 
 	}
