@@ -1,4 +1,3 @@
-import java.util.HashSet;
 import java.util.ArrayList;
 
 class Ex9_4_allSubsets {
