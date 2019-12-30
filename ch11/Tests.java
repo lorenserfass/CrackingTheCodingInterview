@@ -28,7 +28,7 @@ class Tests {
 	
 	/**
 	 * Make a somewhat random matrix where each row and column is in sorted order.
-	 * (Repeats are possible). Will include both positive and negative numbers.
+	 * (Duplicates are possible). Will include both positive and negative numbers.
 	 * @param rows Number of rows
 	 * @param cols Number of columns
 	 * @return
@@ -41,7 +41,7 @@ class Tests {
 		for (int i = 1; i < cols; i++)
 			mat[0][i] = mat[0][i - 1] + r.nextInt(5);
 		for (int i = 1; i < rows; i++)
-			mat[0][i] = mat[i - 1][0] + r.nextInt(5);
+			mat[i][0] = mat[i - 1][0] + r.nextInt(5);
 		
 		for (int i = 1; i < rows; i++)
 			for (int j = 1; j < cols; j++)
@@ -87,6 +87,15 @@ class Tests {
 		}
 	}
 	
+	public static void printMatrix(int[][] matrix) {
+		for (int row = 0; row < matrix.length; row++) {
+			StringBuilder sb = new StringBuilder();
+			for (int col = 0; col < matrix[0].length; col++)
+				sb.append(String.format("%1$5s", matrix[row][col]));
+			System.out.println(sb.toString());
+		}
+	}
+	
 	public static void main(String[] args) throws IOException {
 		for (int i = -3; i < 15; i++) {
 			int[] x = new int[12];
@@ -94,6 +103,19 @@ class Tests {
 			rotateArrayInPlace(x, i);
 			System.out.println("rotating by " + i + ": " + Arrays.toString(x));
 		}
+		
+		
+		// make 100 random "increasing" matrices.
+		// search using both methods and compare results.
+		for (int i = 0; i < 100; i++) {
+			int[][] mat = makeIncreasingMatrix(20, 20);
+			for (int j = -30; j < 200; j++) {
+				Exercises.Coords s1 = Exercises.Ex11_6_searchMatrix(mat, j);
+				Exercises.Coords s2 = Exercises.Ex11_6_searchMatrixSlow(mat, j);
+				assert (s1 == null && s2 == null) || (mat[s1.row][s1.col] == j);
+			}
+		}
+		
 		
 	}
 }

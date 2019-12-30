@@ -1,8 +1,16 @@
-import java.util.Random;
 import java.util.Arrays;
 import java.util.ArrayList;
 
 class Exercises {
+	
+	public static class Coords {
+		int row;
+		int col;
+		Coords(int row, int col) {
+			this.row = row;
+			this.col = col;
+		}
+	}
 	
 	/**
 	 * @param x Sorted array
@@ -81,8 +89,57 @@ class Exercises {
 		Ex11_2_quicksortAnagram(x, m + 1, u);
 	}
 	
+	
+	public static Coords Ex11_6_searchMatrix(int[][] matrix, int value) {
+		return searchMatrix(matrix, value, 0, matrix.length - 1, 0, matrix[0].length - 1);
+	}
+	
+	private static Coords searchMatrix(int[][] matrix, int value, int vl, int vu, int hl, int hu) {
+		if (vl > vu || hl > hu)
+			return null; // signifies that the value was not found
 
+		int hm = (hl + hu) / 2; // horizontal middle
+		int vm = (vl + vu) / 2; // vertical middle
+		
+		if (matrix[vm][hm] == value)
+			return new Coords(vm, hm);
+		
+		Coords lowerLeft, upperRight, other;
+		
+		// in either case one quadrant is eliminated
+		if (value < matrix[vm][hm]) {
+			lowerLeft  = searchMatrix(matrix, value, vm, vu,     hl, hm - 1);
+			upperRight = searchMatrix(matrix, value, vl, vm - 1, hm, hu);
+			other      = searchMatrix(matrix, value, vl, vm - 1, hl, hm - 1);
+		}
+		else { // value < matrix[vm][hm]
+			lowerLeft  = searchMatrix(matrix, value, vm + 1, vu, hl,     hm);
+			upperRight = searchMatrix(matrix, value, vl,     vm, hm + 1, hu);
+			other      = searchMatrix(matrix, value, vm + 1, vu, hm + 1, hu);
+		}
+		
+		if (lowerLeft != null) return lowerLeft;
+		if (upperRight != null) return upperRight;
+		if (other != null) return other;
+		
+		return null;
+	}
 
+	/**
+	 * for testing
+	 * @param matrix
+	 * @param value
+	 * @return
+	 */
+	public static Coords Ex11_6_searchMatrixSlow(int[][] matrix, int value) {
+		for (int row = 0; row < matrix.length; row++) {
+			for (int col = 0; col < matrix[0].length; col++) {
+				if (matrix[row][col] == value)
+					return new Coords(row, col);
+			}
+		}
+		return null;
+	}
 
 
 }
