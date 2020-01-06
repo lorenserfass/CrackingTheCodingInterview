@@ -70,7 +70,7 @@ class Exercises {
 	
 	private static int rand4() {
 		int r;
-		do r = rand5(); while (r != 4);
+		do { r = rand5(); } while (r == 4);
 		return r;
 	}
 	
@@ -89,7 +89,7 @@ class Exercises {
 	 */
 	public static int rand7() {
 		int r;
-		do r = rand8(); while (r != 7);
+		do r = rand8(); while (r == 7);
 		return r;
 	}
 	
@@ -118,8 +118,9 @@ class Exercises {
 		}
 		System.out.println(numberInEnglish(123456789));
 
-
-
+		int[] counts = new int[7];
+		for (int i = 0; i < 10000; i++) counts[rand7()]++;
+		System.out.println(Arrays.toString(counts));
 
 	}
 
