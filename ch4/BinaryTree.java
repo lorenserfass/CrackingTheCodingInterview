@@ -1,4 +1,5 @@
 import java.util.ArrayList; // for returning from exercise 4.4
+import java.util.Iterator;
 import java.util.Vector; // for input to exercise 4.3
 
 /**
@@ -12,20 +13,20 @@ class BinaryTree<T extends Comparable<T>> {
 	Node root = null;
 
 	class Node {
-		T value;
+		T key;
 		Node parent; // used in ex 4.6, also ancestor exercise
 		Node left;
 		Node right;
 		
-		Node(T value) {
-			this.value = value;
+		Node(T key) {
+			this.key = key;
 			this.left = null;
 			this.right = null;
 			this.parent = null;
 		}
 		
-		Node(T value, Node left, Node right) {
-			this.value = value;
+		Node(T key, Node left, Node right) {
+			this.key = key;
 			this.left = left;
 			this.right = right;
 			this.parent = null;
@@ -222,7 +223,6 @@ class BinaryTree<T extends Comparable<T>> {
 		return getAncestorInfo(root, node1, node2).ancestor; // TODO
 	}
 	
-	
 	private AncestorInfo getAncestorInfo(Node node, Node node1, Node node2) { // , boolean is1above, boolean is2above) {
 		
 		if (node == null)
@@ -265,7 +265,7 @@ class BinaryTree<T extends Comparable<T>> {
 		q.enqueue(root);
 		while (!q.isEmpty()) {
 			Node n = q.dequeue();
-			System.out.println(n.value);
+			System.out.println(n.key);
 			if (n.left  != null) q.enqueue(n.left);
 			if (n.right != null) q.enqueue(n.right);
 		}
@@ -297,8 +297,8 @@ class BinaryTree<T extends Comparable<T>> {
 		TreeInfo<T> rightInfo = getTreeInfo(node.right);
 
 		// info to return
-		T leftmost  = node.value;
-		T rightmost = node.value;
+		T leftmost  = node.key;
+		T rightmost = node.key;
 		int depth = 1 + Math.max(leftInfo.depth, rightInfo.depth);
 		boolean isBST = true;
 		boolean isBalanced1 = leftInfo.isBalanced1 && rightInfo.isBalanced1 && Math.abs(leftInfo.depth - rightInfo.depth) <= 1;
@@ -306,13 +306,13 @@ class BinaryTree<T extends Comparable<T>> {
 		
 		if (node.left != null) {
 			leftmost = leftInfo.leftmostValue;
-			if (!leftInfo.isBST || leftInfo.rightmostValue.compareTo(node.value) > 0)
+			if (!leftInfo.isBST || leftInfo.rightmostValue.compareTo(node.key) > 0)
 				isBST = false;
 		}
 
 		if (node.right != null) {
 			rightmost = rightInfo.rightmostValue;
-			if (!rightInfo.isBST || rightInfo.leftmostValue.compareTo(node.value) < 0)
+			if (!rightInfo.isBST || rightInfo.leftmostValue.compareTo(node.key) < 0)
 				isBST = false;
 		}
 			
@@ -390,9 +390,91 @@ class BinaryTree<T extends Comparable<T>> {
 		sb.append("\n");
 		for (int i = 0; i < depth; i++)
 		sb.append("  ");
-		sb.append(node.value);
+		sb.append(node.key);
 		buildString(sb, node.left, depth + 1);
 	}
 	
 	
+	public class InOrder implements Iterator<T> {
+		
+		private MyStack<Node> stack;
+		private Node current;
+		
+		InOrder() {
+			stack = new MyStack<Node>();
+			current = root;
+			
+			while (current != null) {
+				stack.push(current);
+				current = current.left;
+			}
+		}
+
+		@Override
+		public boolean hasNext() {
+			return current == null && !stack.isEmpty();
+		}
+
+		@Override
+		public T next() {
+			Node next = stack.pop();
+			current = next.right;
+			while (current != null) {
+				stack.push(current);
+				current = current.left;
+			}
+			return next.key;
+		}
+		
+	}
+	
+	public class PreOrder implements Iterator<T> {
+		
+		private MyStack<Node> stack;
+		
+		PreOrder() {
+			stack = new MyStack<Node>();
+			if (root != null) stack.push(root);
+		}
+
+		@Override
+		public boolean hasNext() {
+			return !stack.isEmpty();
+		}
+
+		@Override
+		public T next() {
+			Node next = stack.pop();
+			if (next.right != null) stack.push(next.right);
+			if (next.left  != null) stack.push(next.left);
+			return next.key;
+		}
+	}
+	
+	
+	public class PreOrderWithNulls implements Iterator<T> {
+
+		private MyStack<Node> stack;
+		
+		PreOrderWithNulls() {
+			stack = new MyStack<Node>();
+			stack.push(root);
+		}
+
+		@Override
+		public boolean hasNext() {
+			return !stack.isEmpty();
+		}
+
+		@Override
+		public T next() {
+			Node next = stack.pop();
+			if (next != null) {
+				stack.push(next.right);
+				stack.push(next.left);
+			}
+			return next != null ? next.key : null;
+		}
+
+	}
 }
