@@ -67,9 +67,9 @@ class Tests {
 		System.out.print("Checking ancestor calculations... ");
 		for (int i = 0; i < 13; i++) {
 			for (int j = 0; j < 13; j++) {
-				assert ancestors[i][j] == tree.Ex4_7_1_ancestor(nodeList.get(i), nodeList.get(j)).value;
-				assert ancestors[i][j] == tree.Ex4_7_2_ancestor(nodeList.get(i), nodeList.get(j)).value;
-				assert ancestors[i][j] == tree.Ex4_7_3_ancestor(nodeList.get(i), nodeList.get(j)).value;
+				assert ancestors[i][j] == tree.Ex4_7_1_ancestor(nodeList.get(i), nodeList.get(j)).key;
+				assert ancestors[i][j] == tree.Ex4_7_2_ancestor(nodeList.get(i), nodeList.get(j)).key;
+				assert ancestors[i][j] == tree.Ex4_7_3_ancestor(nodeList.get(i), nodeList.get(j)).key;
 			}
 		}
 		System.out.println("OK");
