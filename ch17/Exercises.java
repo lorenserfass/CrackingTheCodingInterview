@@ -85,7 +85,7 @@ class Exercises {
 	/**
 	 * Ex 17.11
 	 * Uses rand5() to generate rand7()
-	 * @return
+	 * @return A random number between 0 and 6 (inclusive) with equal probability.
 	 */
 	public static int rand7() {
 		int r;

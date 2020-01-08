@@ -3,6 +3,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Random;
 
 class Tests {
@@ -116,6 +117,9 @@ class Tests {
 			}
 		}
 		
+		for (int i = -20; i < 20; i++) {
+			System.out.format("mod(%s, 7) = %s\n", i, Exercises.mod(i, 7));
+		}
 		
 	}
 }

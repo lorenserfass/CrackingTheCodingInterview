@@ -1,8 +1,18 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Ex9_2_Robot {
 
 
+	/**
+	 * Count number of paths from upper-left to lower-right in
+	 * an X times Y board, when only down and right are allowed
+	 * directions.
+	 * This uses X * Y space.
+	 * @param X
+	 * @param Y
+	 * @return number of paths
+	 */
 	public static int getNumPaths1(int X, int Y) {
 		int[][] board;
 
@@ -21,6 +31,28 @@ public class Ex9_2_Robot {
 		return board[X - 1][Y - 1];
 	}
 
+	/**
+	 * Count number of paths from upper-left to lower-right in
+	 * an X times Y board, when only down and right are allowed
+	 * directions.
+	 * This uses space proportional to Y.
+	 * @param X
+	 * @param Y
+	 * @return number of paths
+	 */
+	public static int getNumPaths1_1(int X, int Y) {
+		int[] row = new int[Y];
+		Arrays.fill(row, 1);
+		
+		for (int x = 1; x < X; x++) {
+			int[] rowx = new int[Y];
+			rowx[0] = 1;
+			for (int y = 1; y < Y; y++)
+				rowx[y] = rowx[y - 1] + row[y];
+			row = rowx;
+		}
+		return row[Y - 1];
+	}
 
 	public static int getNumPaths2(int X, int Y, ArrayList<Pair> unavailableSpots) {
 		int[][] board;
@@ -47,6 +79,8 @@ public class Ex9_2_Robot {
 
 		return board[X - 1][Y - 1];
 	}
+	
+	
 
 }
 

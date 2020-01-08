@@ -31,6 +31,78 @@ class Exercises {
 		return -1;
 	}
 	
+	
+	/**
+	 * mod(-1, 5) = 4
+	 * @param n
+	 * @param modulus
+	 * @return
+	 */
+	public static int mod(int n, int modulus) {
+		if (n >= 0)
+			return n % modulus;
+		else {
+			int blah = (-n) % modulus;
+			return (modulus - blah) % modulus;
+		}
+	}
+	
+	/**
+	 * In a rotated sorted array, find the start of the rotation.
+	 * (The index with negative delta to the preceding index.)
+	 * @param x Sorted (ascending) array that has been rotated
+	 * @return Index beginning the rotation
+	 */
+	public static int findRotation(int[] x) {
+		int rot = findRotation(x, x.length, 0, x.length - 1);
+		return (rot == -1) ? 0 : rot;
+	}
+
+	
+	private static int findRotation(int[] x, int n, int lo, int hi) {
+		// TODO: this is real messy.
+		if (lo > hi) return -1;
+		if (lo == hi) {
+			if (delta(x, lo) >= 0)
+				return -1;
+			else
+				return lo;
+		}
+		if (hi - lo == 1) {
+			if (delta(x, hi) < 0)
+				return hi;
+		}
+
+		int m = (lo + hi) / 2;
+		if (delta(x, m) < 0) return m;
+
+		if (x[lo] > x[mod(m - 1, n)])
+			return findRotation(x, n, lo, mod(m - 1, n));
+		if (x[mod(m + 1, n)] > x[hi])
+			return findRotation(x, n, mod(m + 1, n), hi);
+
+		// at this point, we may have to check both subarrays
+		int left = findRotation(x, n, lo, mod(m - 1, n));
+		int right = findRotation(x, n, mod(m + 1, n), hi);
+
+		if (left != -1)  return left;
+		if (right != -1) return right;
+		return -1;
+	}	
+
+	/**
+	 * Value of index i minus value at i-1. (wraps around)
+	 * @param x
+	 * @param i
+	 * @return
+	 */
+	public static int delta(int[] x, int i) {
+		// TODO: bounds checking
+		if (i == 0) return x[0] - x[x.length - 1];
+		return x[i] - x[i-1];
+		// return x[i] - x[mod(i - 1, x.length)]; // could use Math.floorMod
+	}
+	
 	/**
 	 * @param x An array sorted in ascending order which has been rotated.
 	 * @param v Value sought.
@@ -38,12 +110,17 @@ class Exercises {
 	 */
 	static int Ex11_3_searchRotatedArray(int[] x, int v) {
 		// find rotation. x[r] will be the smallest element of the array.
-		int r = 0;
+		// TODO: the loop below is linear time, defeating the purpose
+		// of the binary search below it. Correct by searching for
+		// the array's starting point using binary search as well.
+		// Still, this version is useful for testing.
+		/*int r = 0;
 		for (int i = 0; i < x.length - 1; i++)
 			if (x[i] > x[i + 1]) {
 				r = i + 1;
 				break;
-			}
+			}*/
+		int r = findRotation(x);
 		
 		// iterative binary search with modular offset
 		int l = 0, u = x.length - 1, m, mr;

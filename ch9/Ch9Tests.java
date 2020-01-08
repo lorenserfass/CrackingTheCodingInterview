@@ -57,6 +57,13 @@ public class Ch9Tests {
 				assert arr[mi2] == mi2;
 			}
 		}
+		
+		for (int i = 1; i < 5; i++) {
+			for (int j = 1; j < 10; j++) {
+				assert Ex9_2_Robot.getNumPaths1(i, j) == Ex9_2_Robot.getNumPaths1_1(i, j);
+			}
+		}
+		
 	}
 
 }
