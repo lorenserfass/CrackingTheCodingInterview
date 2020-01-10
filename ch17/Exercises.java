@@ -1,7 +1,21 @@
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Random;
 
 class Exercises {
+	
+	public static class IntPair {
+		final int a;
+		final int b;
+		public IntPair(int a, int b) {
+			this.a = a;
+			this.b = b;
+		}
+		@Override
+		public String toString() {
+			return "IntPair [a=" + a + ", b=" + b + "]";
+		}
+	}
 
 
 	private static String[] counts = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
@@ -21,12 +35,64 @@ class Exercises {
 		x[j] = x[i] ^ x[j];
 		x[i] = x[i] ^ x[j];
 	}
+	
+
+	
+	/**
+	 * Ex 17.3
+	 * @param n the number taken factorial of
+	 * @return the number of trailing zeros in n factorial
+	 */
+	public static int factorialTrailingZeros(int n) {
+		int count2 = 0; // number of 2's in fact(n)'s prime factorization
+		int factor = 2;
+		while (factor <= n) {
+			count2 += n / factor;
+			factor *= 2;
+		}
+		
+		int count5 = 0; // number of 5's in fact(n)'s prime factorization
+		factor = 5;
+		while (factor <= n) {
+			count5 += n / factor;
+			factor *= 5;
+		}
+
+		return Math.min(count2, count5);
+	}
+	
+	
+	/**
+	 * Ex 17.6
+	 * Find indices m and n so that if x[m]..x[n] inclusive were sorted, x would be sorted.
+	 * TODO: more testing.
+	 * Maybe there's a more clever, efficient way.
+	 * This just copies the array, sorts it, and compares the arrays.
+	 * This is boring but may be useful for testing.
+	 * @param x
+	 */
+	public static IntPair findInterval(int[] x) {
+		int[] y = Arrays.copyOf(x, x.length);
+		
+		Arrays.sort(y);
+		
+		int lo = 0;
+		int hi = x.length - 1;
+		
+		while (x[lo] == y[lo]) lo++;
+		if (lo == x.length)
+			return new IntPair(0, 0);
+
+		while (x[hi] == y[hi]) hi--;
+		
+		return new IntPair(lo, hi);
+	}
 
 	
 	/**
 	 * Ex 17.7
 	 * Prints the number in English.
-	 * NOT DONE.
+	 * TODO: NOT DONE. ROUGH DRAFT.
 	 * @param x
 	 * @return
 	 */
@@ -95,16 +161,20 @@ class Exercises {
 	
 	
 	/**
-	 * Ex.
+	 * Ex. 17.12
+	 * Find all pairs of integers in array that have a target sum.
 	 * NOT DONE
 	 * @param x
-	 * @param sum
+	 * @param target
 	 */
-	public void allPairsThatSum(int[] x, int sum) {
+	public void allPairsThatSum(int[] x, int target) {
 		int[] y = Arrays.copyOf(x, x.length);
 		Arrays.sort(y);
-		int lb = 0;
-		int ub = x.length - 1;
+		int lo = 0;
+		int hi = x.length - 1;
+		
+		// TODO
+		
 	}
 
 	
@@ -121,7 +191,11 @@ class Exercises {
 		int[] counts = new int[7];
 		for (int i = 0; i < 10000; i++) counts[rand7()]++;
 		System.out.println(Arrays.toString(counts));
-
+		
+		
+		// test 17.6
+		int[] x = {1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19};
+		System.out.println(findInterval(x));
 	}
 
 }

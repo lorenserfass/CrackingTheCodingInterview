@@ -40,6 +40,32 @@ class Exercises {
 		return Arrays.copyOf(y, m);
 	}
 	
+	
+	/**
+	 * Ex 18.4
+	 * @param n non-negative integer
+	 * @param d integer between 0 and 9 inclusive
+	 * @return Count the number of times d occurs in all the numbers 0-n inclusive.
+	 */
+	public static int countDigit(int n, int d) {
+		if (n == 0 && d == 0) return 1;
+		if (d == 0) d = 10;
+		int i = 0; // 0 for the rightmost digit, 1 for the 10s digit, 2 for the 100s digit, etc.
+		int pow10 = 1; // 10^i
+		int count = 0; // running total of the 2s as we move leftward in the number
+
+		while (pow10 <= n) {
+			int digit = (n % (10 * pow10)) / pow10; // isolate digit i of n
+			count += digit * i * pow10 / 10; // num2s(9) = 1. num2s(99): 20. num2s(999) = 300. num2s(9999) = 4000
+			if      (digit == d) count += n % pow10 + 1;
+			else if (digit >  d) count += pow10;
+
+			pow10 *= 10;
+			i++;
+		}
+
+		return count;
+	}
 
 	private static int partition(int[] x, int lo, int hi) {
 		// code for Quicksort from Sedgewick algorithms book
@@ -108,6 +134,7 @@ class Exercises {
 					break;
 				}
 		}*/
+		
 
 
 
