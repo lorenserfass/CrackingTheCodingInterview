@@ -130,6 +130,82 @@ class Exercises {
 	}
 
 
+	/**
+	 * Find the best sum of adjacent elements in x[].
+	 * This function is slow (cubic time?) but was easy to write
+	 * so can be used to test the faster version.
+	 * @param x
+	 * @return
+	 */
+	public static int bestSumSlow(int[] x) {
+		int bestSum = Integer.MIN_VALUE;
+		// int bestStart = 0;
+		// int bestEnd = 0;
+		for (int i = 0; i < x.length; i++) {
+			for (int j = i; j < x.length; j++) {
+				int sum = 0;
+				for (int k = i; k <= j; k++) {
+					sum += x[k];
+				}
+				if (sum > bestSum) {
+					bestSum = sum;
+					// bestStart = i;
+					// bestEnd = j;
+				}
+			}
+		}
+		// System.out.format("i = %s\tj = %s\tsum = %s\n", bestStart, bestEnd, bestSum);
+		return bestSum;
+	}
+	
+	public static int bestSumWithStartAndEnd(int[] x) {
+		int i = 0;
+		int start = 0;		// the start and end variables are within 0..i and maximise sum(x[start..end])
+		int end = 0;		//
+		int sum = x[0];		// sum(x[start..end]). The best sum of adjacent elements in x[0..i]
+		int start2 = 0;		// start2 chosen to maximize sum(x[start2..i])
+		int sum2 = x[0];	// sum(x[start2..i]). The best sum of adjacent elements in x[0..i] that includes index i
+		
+		for (i = 1; i < x.length; i++) {
+			if (sum2 < 0) {
+				start2 = i;
+				sum2 = x[i];
+			}
+			else {
+				sum2 += x[i];
+			}
+			if (sum2 > sum) {
+				start = start2;
+				end = i;
+				sum = sum2;
+			}
+		}
+		System.out.format("i = %s\tj = %s\tsum = %s\n", start, end, sum);
+		return sum;
+	}
+	
+	/**
+	 * Ex 17.8
+	 * The largest sum of a contiguous sequence of elements within x[].
+	 * If you don't care about the starting and ending indices,
+	 * the code is really short.
+	 * @param x an array
+	 * @return The best sum of a contiguous sequence of elements within x[].
+	 */
+	public static int bestSum(int[] x) {
+		int i    = 0;
+		int sum  = x[0]; // The best sum of a contiguous sequence in x[0..i]
+		int sum2 = x[0]; // The best sum of a contiguous sequence in x[0..i] that includes index i
+		
+		for (i = 1; i < x.length; i++) {
+			if (sum2 < 0)   sum2  = x[i];
+			else            sum2 += x[i];
+			if (sum2 > sum) sum   = sum2;
+		}
+
+		return sum;
+	}
+
 	private static int rand5() {
 		return new Random().nextInt(5);
 	}
