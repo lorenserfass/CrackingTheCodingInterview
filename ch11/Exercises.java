@@ -3,6 +3,34 @@ import java.util.ArrayList;
 
 class Exercises {
 	
+	
+	/**
+	 * Ex 11.1
+	 * Merge b into a.
+	 * b is sorted.
+	 * The first section of a is sorted, leaving space for b's elements at the end.
+	 * (The last part of a is over-written).
+	 * @param a
+	 * @param b
+	 */
+	public static void mergeSortedArrays(int[] a, int[] b) {
+		int endB = b.length - 1;
+		int endA = a.length - b.length - 1;
+		int end = a.length - 1;
+
+		while (endB >= 0) {
+			if (endA < 0) {
+				a[end--] = b[endB--];
+			}
+			else { // in this case, endA >= 0 and endB >= 0
+				if (a[endA] > b[endB])
+					a[end--] = a[endA--];
+				else
+					a[end--] = b[endB--];
+			}
+		}
+	}
+	
 	public static class Coords {
 		int row;
 		int col;
