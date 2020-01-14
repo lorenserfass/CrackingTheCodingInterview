@@ -2,6 +2,28 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Ex9_2_Robot {
+	
+	
+	/**
+	 * Calculates (n choose k), or factorial(n) / (factorial(k) * factorial(n - k))
+	 * avoiding using factorials and with unlikely overflow.
+	 * Time proportional to k, or to n-k, whichever is smaller.
+	 * @param n
+	 * @param k
+	 * @return
+	 */
+	public static long choose(int n, int k) {
+		if (k > n) return 0;
+		if (n < 0 || k < 0) return 0;
+		if (n - k < k) k = n - k;
+		
+		long r = 1;
+		for (int d = 1; d <= k; d++) {
+			r *= n--;
+			r /= d;
+		}
+		return r;
+	}
 
 
 	/**
@@ -35,7 +57,7 @@ public class Ex9_2_Robot {
 	 * Count number of paths from upper-left to lower-right in
 	 * an X times Y board, when only down and right are allowed
 	 * directions.
-	 * This uses space proportional to Y.
+	 * This uses space proportional to Y and time proportional to X * Y.
 	 * @param X
 	 * @param Y
 	 * @return number of paths
@@ -52,6 +74,20 @@ public class Ex9_2_Robot {
 			row = rowx;
 		}
 		return row[Y - 1];
+	}
+	
+	
+	/**
+	 * Count number of paths from upper left to lower right in
+	 * an X times Y board, when only down and right are allowed
+	 * directions.
+	 * This uses O(1) space, and time proportional to X or Y, whichever is smaller.
+	 * @param X
+	 * @param Y
+	 * @return
+	 */
+	public static long getNumPaths1_2(int X, int Y) {
+		return choose(X + Y - 2, X - 1);
 	}
 
 	public static int getNumPaths2(int X, int Y, ArrayList<Pair> unavailableSpots) {
