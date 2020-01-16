@@ -43,9 +43,12 @@ class Exercises {
 	
 	/**
 	 * Ex 18.4
+	 * Count the number of times d occurs in all the numbers 0-n inclusive.
+	 * For example, "2" occurs six times in 0-22 (twice in the 22).
+	 * This was interesting.
 	 * @param n non-negative integer
 	 * @param d integer between 0 and 9 inclusive
-	 * @return Count the number of times d occurs in all the numbers 0-n inclusive.
+	 * @return the count
 	 */
 	public static int countDigit(int n, int d) {
 		if (n == 0 && d == 0) return 1;
@@ -109,10 +112,21 @@ class Exercises {
 	 * (I'm hoping this is slower for large arrays).
 	 * @param array
 	 * @param n
-	 * @return
 	 */
 	public static void smallestForTesting(int[] array, int n) {
 		Arrays.sort(array);
+	}
+	
+	
+	/**
+	 * Do Ex 18.6 using an in-place heap.
+	 * The smallest n elements are moved to the *end* of the array.
+	 * I am hoping this is faster than a straight sort...
+	 * @param array
+	 * @param n
+	 */
+	public static void smallestUsingHeapsort(Integer[] array, int n) {
+		PQ.getSmallestN(array, n);
 	}
 		
 
