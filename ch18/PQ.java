@@ -16,12 +16,15 @@ class PQ<T extends Comparable<T>> {
 	private T[] pq;
 	private int size;
 	private final int isMinPQ;
+	private int capacity;
 	
 	/**
 	 * @param capacity this is the max capacity; the PQ is not resizing yet
 	 * @param isMinPQ indicates whether this should be a min-PQ (true) or max-PQ (false)
 	 */
-	public PQ(int capacity, boolean isMinPQ) {
+	@SuppressWarnings("unchecked")
+	public PQ(boolean isMinPQ) {
+		this.capacity = 4;
 		pq = (T[]) new Comparable[capacity + 1];
 		size = 0;
 		this.isMinPQ = isMinPQ ? 1 : -1;
@@ -34,8 +37,17 @@ class PQ<T extends Comparable<T>> {
 	public T peek() { return pq[1]; }
 
 	public void enqueue(T x) {
+		if (size == capacity) {
+			capacity *= 2;
+			changeCapacity(capacity);
+		}
 		pq[++size] = x;
 		sink(swim(size));
+	}
+	
+	
+	private void changeCapacity(int n) {
+		pq = Arrays.copyOf(pq, n + 1);
 	}
 
 
@@ -44,6 +56,7 @@ class PQ<T extends Comparable<T>> {
 		pq[1] = pq[size];
 		pq[size--] = null;
 		sink(1);
+		// TODO: resize down if necessary
 		return toReturn;
 	}
 
@@ -210,8 +223,8 @@ class PQ<T extends Comparable<T>> {
 		Random random = new Random();
 
 		int n = 10;
-		PQ<Integer> minPQ = new PQ<Integer>(n, true);
-		PQ<Integer> maxPQ = new PQ<Integer>(n, false);
+		PQ<Integer> minPQ = new PQ<Integer>(true);
+		PQ<Integer> maxPQ = new PQ<Integer>(false);
 		int[] x = new int[n];
 
 		/*for (int i = 0; i < 100; i++) {

@@ -2,7 +2,7 @@ class MedianTracker {
 
 	private MyBSTMultiset<Double> bst;
 	
-	public void insert(double x) {
+	public void track(double x) {
 		bst.insert(x);
 	}
 	

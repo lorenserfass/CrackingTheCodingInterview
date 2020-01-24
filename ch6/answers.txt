@@ -36,7 +36,7 @@ Inductive reasoning:
 
 1. If there is 1 blue-eyed person, they immediately know they are blue-eyed
 because they can see everyone else. They leave on the first flight.
-(Nobody else leaves because they expect blue-eyed to leave on the first
+(Nobody else leaves because they expect the one blue-eyed person to leave on the first
 flight if he doesn't see any other blue-eyed people, but to wait if
 he does see some.)
 
@@ -56,6 +56,27 @@ So N people would leave on Nth flight.
 
 
 Exercise 6.5
+
+
+
+Exercise 6.6 - 100 lockers
+10 lockers will remain open.
+Only the square numbers will remain open:
+1, 4, 9, 16, 25, 36, 49, 64, 81, 100.
+Explanation:
+The number of times a locker is toggled is equal to
+the number of factors it has (including 1 and itself).
+For example, locker 10 is:
+- opened on the 1st pass
+- closed on the 2nd pass
+- opened on the 5th pass
+- closed on the 10th pass.
+Like locker 10, any number that has an even number of factors
+ends up closed.
+Factors of a number come in pairs; each pair multiplies to produce the number.
+A number can have an odd number
+of factors only if two of them are the same; i.e., the number is square.
+For example, 36 equals 1*36, 2*18, 3*12, 4*9, and 6*6.
 
 
 
