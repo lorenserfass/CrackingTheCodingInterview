@@ -4,3 +4,4 @@
 *.class
 *.swp
 *.db
+.Rhistory
