@@ -7,6 +7,26 @@ import java.util.Iterator;
 import java.util.Random;
 
 class Tests {
+	
+	public static int[] makeRandomSortedArray(int length, int lowerBound, int upperBound) {
+		int[] x = new int[length];
+		Random r = new Random();
+		
+		for (int i = 0; i < length; i++) {
+			x[i] = lowerBound + r.nextInt(upperBound - lowerBound);
+		}
+		
+		Arrays.sort(x);
+		return x;
+	}
+	
+	public static boolean isSorted(int[] x) {
+		for (int i = 1; i < x.length; i++) {
+			if (x[i] < x[i-1])
+				return false;
+		}
+		return true;
+	}
 
 
 	/**
@@ -14,7 +34,7 @@ class Tests {
 	 * Runs function to sort the list into groups of anagrams.
 	 * @throws IOException
 	 */
-	static void Ex11_2_TEST() throws IOException {
+	public static void Ex11_2_TEST() throws IOException {
 		ArrayList<String> strings = new ArrayList<String>();
 		BufferedReader br = new BufferedReader(new FileReader("anagrams.txt"));
 		String line;
@@ -120,6 +140,15 @@ class Tests {
 		for (int i = -20; i < 20; i++) {
 			System.out.format("mod(%s, 7) = %s\n", i, Exercises.mod(i, 7));
 		}
+		
+		
+		int n1 = 10;
+		int n2 = 10;
+		int[] a = makeRandomSortedArray(n1, -30, 50);
+		int[] b = makeRandomSortedArray(n2, -30, 50);
+		a = Arrays.copyOf(a, n1 + n2);
+		Exercises.mergeSortedArrays(a, b);
+		assert isSorted(a);
 		
 	}
 }
